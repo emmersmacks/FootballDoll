@@ -17,7 +17,7 @@ public class GameActionController : MonoBehaviour
     private bool _canWin = false;
 
     public Action OnDead = delegate { };
-    public Action OnWin = delegate { };
+    public Action OnWin; //= delegate { Debug.Log("Win"); };
 
     private void Start()
     {
@@ -26,7 +26,7 @@ public class GameActionController : MonoBehaviour
             i.CollisionEnter += OnPlayerTriggerEnter;
         }
         
-        _timer.OnTimerEnd += OnWin;
+        _timer.OnTimerEnd = OnEndTimer;
         _gateTrigger.TriggerEnter += OnGateTriggerEnter;
     }
 
@@ -38,9 +38,16 @@ public class GameActionController : MonoBehaviour
         }
     }
 
+    
+
+    private void OnEndTimer()
+    {
+        OnWin();
+    }
+
     private void OnGateTriggerEnter(Collider collider)
     {
-        if (collider.transform.GetComponent<Ball>() != null)
+        if (collider.transform.GetComponent<DefaultBall>() != null)
         {
             _dataController.DamageHealth(1);
             Destroy(collider.gameObject);
@@ -48,6 +55,8 @@ public class GameActionController : MonoBehaviour
 
         CheckStates();
     }
+
+    
 
     private void OnPlayerTriggerEnter(Collision collider)
     {

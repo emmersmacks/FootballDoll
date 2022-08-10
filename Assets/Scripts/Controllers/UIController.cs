@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
-
-        _gameActionController.OnWin += ShowWinScreen;
         _gameActionController.OnDead += ShowDeadScreen;
+        _gameActionController.OnWin += ShowWinScreen;
+
     }
 
     public void SetDefaultValueProgressBar(int maxHealth, int winHealth, int currentHealth)
@@ -47,6 +48,7 @@ public class UIController : MonoBehaviour
 
     public void ShowWinScreen()
     {
+        Debug.Log("AA");
         Time.timeScale = 0;
         _winScreen.SetActive(true);
     }
